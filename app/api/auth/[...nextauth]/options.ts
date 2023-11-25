@@ -38,7 +38,10 @@ export const options: NextAuthOptions = {
     jwt: async ({ token, user }) => {
       if (user) {
         const decodedToken: TokenClaimsModel = await jwtDecode(user.idToken);
-        token.role =decodedToken.custom_claims ? decodedToken.custom_claims[0] : "";
+        token.role = decodedToken.custom_claims
+          ? decodedToken.custom_claims[0]
+          : "";
+        token.userId = user.localId;
         token.idToken = user.idToken;
       }
 
@@ -47,6 +50,7 @@ export const options: NextAuthOptions = {
     session: async ({ session, token }) => {
       session.user.idToken = token.idToken;
       session.user.role = token.role;
+      session.user.userId = token.userId;
       return Promise.resolve(session);
     },
   },

@@ -12,7 +12,7 @@ export const SignInOptions = () => {
         />
       </Grid>
       <Grid item xs className="text-right">
-        <Link href="/auth/email-verification">Forgot password?</Link>
+        <Link href="https://activity-monitor-v2.vercel.app/auth/email-verification">Forgot password?</Link>
       </Grid>
     </Grid>
   );
