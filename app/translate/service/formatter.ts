@@ -8,3 +8,12 @@ export const getFormattedDate = (selectedDate: string) => {
   const formattedDate = `${day}/${month}/${year}`;
   return formattedDate;
 };
+
+
+
+export const getFormattedFullName = (
+  firstName: string,
+  lastName: string
+) => {
+  return `${firstName} ${lastName}`;
+};

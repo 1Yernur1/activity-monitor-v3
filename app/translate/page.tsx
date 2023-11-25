@@ -2,9 +2,9 @@ import { Suspense } from "react";
 import Loading from "./loading";
 import { Header } from "../components/Header";
 import { ActivityBoard } from "./components/ActivityBoard";
-import { getSession } from "next-auth/react";
+import { StatusModal } from "./components/StatusModal";
 
-export default async function Page() {
+export default function Page() {
   return (
     <Suspense fallback={<Loading />}>
       <div className="h-screen grid grid-cols-6 grid-rows-xs xs:grid-rows-projects">
@@ -15,6 +15,7 @@ export default async function Page() {
           <ActivityBoard />
         </div>
       </div>
+      <StatusModal />
     </Suspense>
   );
 }
