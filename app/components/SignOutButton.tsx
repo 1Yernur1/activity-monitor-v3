@@ -5,7 +5,7 @@ import { signOut } from "next-auth/react";
 export const SignOutButton = () => {
   const handleClick = () => signOut();
   return (
-    <Button variant="outlined" color="secondary" onClick={handleClick}>
+    <Button variant="contained" color="secondary" onClick={handleClick}>
       Sign Out
     </Button>
   );

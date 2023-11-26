@@ -11,7 +11,7 @@ export default function Page() {
   const searchParams = useSearchParams();
   return (
     <Suspense fallback={<Loading />}>
-      <div className="h-screen grid grid-cols-6 grid-rows-xs xs:grid-rows-projects">
+      <div className="h-screen grid grid-cols-6 grid-rows-projects-xs xs:grid-rows-projects">
         <div className="col-span-full">
           <Header />
         </div>
