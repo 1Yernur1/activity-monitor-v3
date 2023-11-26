@@ -9,13 +9,18 @@ import { ActivityTranslator } from "./ActivityTranslator";
 import { useState } from "react";
 import { FloatingMenu } from "./FloatingMenu";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ActivityProject } from "./ActivityProject";
 
 export const ActivityCard = ({
   activity: {
+    id,
     title,
     language,
     targetLanguage,
     createdAt,
+    status,
+    projectName,
+    projectId,
     translator: { firstName, lastName },
   },
 }: {
@@ -33,6 +38,14 @@ export const ActivityCard = ({
     onClose();
     const params = new URLSearchParams(searchParams);
     params.set("isOpen", "true");
+    params.set("activityId", id.toString());
+    params.set("status", status);
+    replace(`${pathname}?${params.toString()}`);
+  };
+  const handleShow = () => {
+    onClose();
+    const params = new URLSearchParams(searchParams);
+    params.set("projectId", projectId.toString());
     replace(`${pathname}?${params.toString()}`);
   };
   const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) =>
@@ -53,10 +66,14 @@ export const ActivityCard = ({
             <ActivityTargetLanguage targetLanguage={targetLanguage} />
             <ActivityDate description={"Created Date"} date={createdAt} />
             <ActivityTranslator {...{ firstName, lastName }} />
+            <ActivityProject projectName={projectName} />
           </div>
         </CardContent>
       </Card>
-      <FloatingMenu {...{ open, anchorEl, onClose, onClick }} />
+      <FloatingMenu
+        {...{ open, anchorEl, onClose, onClick, status }}
+        handleShow={handleShow}
+      />
     </>
   );
 };
