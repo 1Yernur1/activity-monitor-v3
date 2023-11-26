@@ -6,6 +6,8 @@ import { ActivityTargetLanguage } from "@/app/translate/components/ActivityTarge
 import { ActivityTranslator } from "@/app/translate/components/ActivityTranslator";
 import { Card, CardContent, IconButton, Typography } from "@mui/material";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
+import { FloatingMenu } from "./FloatingMenu";
+import { useState } from "react";
 
 export const ActivityCard = ({
   activity: {
@@ -22,13 +24,21 @@ export const ActivityCard = ({
 }: {
   activity: ActivityModel;
 }) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const isOpen = Boolean(anchorEl);
+
+  const handleClose = () => setAnchorEl(null);
+  const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) =>
+    setAnchorEl(event.currentTarget);
+  const handleClickEdit = () => {};
+  const handleClickChangeStatus = () => {};
   return (
     <>
       <Card sx={{ width: 275 }}>
         <CardContent>
           <div className="mb-2 flex justify-between items-center">
             <Typography>{title}</Typography>
-            <IconButton onClick={() => {}}>
+            <IconButton onClick={handleOpenMenu}>
               <MoreHorizOutlinedIcon />
             </IconButton>
           </div>
@@ -40,6 +50,16 @@ export const ActivityCard = ({
           </div>
         </CardContent>
       </Card>
+      <FloatingMenu
+        {...{
+          isOpen,
+          anchorEl,
+          status,
+          handleClose,
+          handleClickEdit,
+          handleClickChangeStatus,
+        }}
+      />
     </>
   );
 };

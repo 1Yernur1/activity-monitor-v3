@@ -1,5 +1,6 @@
 import { ProjectModel } from "@/app/model/ProjectModel";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ProjectListItem } from "./ProjectListItem";
 
 export const ProjectsListView = ({
   projectsList,
@@ -12,16 +13,7 @@ export const ProjectsListView = ({
   return (
     <div>
       {projectsList.map((project) => (
-        <div
-          key={project.id}
-          onClick={() => {
-            const params = new URLSearchParams(searchParams);
-            params.set("projectId", project.id.toString());
-            router.replace(`${pathname}?${params}`);
-          }}
-        >
-          {project.name}
-        </div>
+        <ProjectListItem key={project.id} project={project} />
       ))}
     </div>
   );

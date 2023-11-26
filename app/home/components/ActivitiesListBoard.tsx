@@ -43,7 +43,7 @@ export const ActivitiesListBoard = ({ projectId }: { projectId: string }) => {
     (activity) => activity.status === "ARCHIVE"
   );
 
-  if (isFetching) return <Typography px={2}>Loading...</Typography>;
+  if (isFetching) return <Typography px={2} variant="h6" mb={"1rem"}>Loading...</Typography>;
 
   return (
     <div className="overflow-auto h-full col-start-1 col-span-full">
