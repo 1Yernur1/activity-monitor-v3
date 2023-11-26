@@ -3,6 +3,8 @@ import { ProjectModel } from "@/app/model/ProjectModel";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { getAllProjects } from "../service/fetcher";
+import { ProjectsListView } from "./ProjectsListView";
+import Typography from "@mui/material/Typography/Typography";
 
 export const SideBar = () => {
   const session = useSession();
@@ -21,11 +23,17 @@ export const SideBar = () => {
         .finally(() => setIsFetching(false));
     }
   }, [session]);
+
+  const content = !(isFetching || isError) && (
+    <ProjectsListView projectsList={projectsList} />
+  );
+  const loading = isFetching && <Typography>Loading...</Typography>;
+  const error = isError && <Typography>Something wrong</Typography>;
   return (
     <div className="py-1 px-6">
-      {projectsList.map((project) => (
-        <div>{project.name}</div>
-      ))}
+      {loading}
+      {content}
+      {error}
     </div>
   );
 };

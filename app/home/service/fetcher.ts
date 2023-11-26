@@ -11,3 +11,15 @@ export const getAllProjects = async (token: string) => {
     throw new Error();
   });
 };
+
+export const getAllActivitiesByProjectId = async (projectId: number, token: string) => {
+  return fetch(`${url}/activities/project/${projectId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.ok) return response.json();
+    throw new Error();
+  });
+};

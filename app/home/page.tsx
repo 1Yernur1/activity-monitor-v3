@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import Loading from "./loading";
 import { Header } from "./components/Header";
 import { SideBar } from "./components/SideBar";
+import { ActivitiesListBoard } from "./components/ActivitiesListBoard";
 
 export default function Page() {
   return (
@@ -10,10 +11,12 @@ export default function Page() {
         <div className="col-span-full">
           <Header />
         </div>
-        <div className="bg-black text-white">
+        <div className="bg-black text-white ">
           <SideBar />
         </div>
-        <div>Activity board</div>
+        <div className="col-start-2 col-span-full">
+          <ActivitiesListBoard />
+        </div>
       </div>
     </Suspense>
   );
