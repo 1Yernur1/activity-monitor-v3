@@ -5,6 +5,7 @@ import { Header } from "../components/Header";
 import { ActivityBoard } from "./components/ActivityBoard";
 import { StatusModal } from "./components/StatusModal";
 import { useSearchParams } from "next/navigation";
+import { ProjectInfoModal } from "./components/ProjectInfoModal";
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -19,6 +20,7 @@ export default function Page() {
         </div>
       </div>
       {searchParams.has("status") && <StatusModal />}
+      {searchParams.has("projectId") && <ProjectInfoModal />}
     </Suspense>
   );
 }

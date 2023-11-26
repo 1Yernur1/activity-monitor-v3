@@ -1,5 +1,5 @@
 "use client";
-import { ActivityModel } from "@/app/model/ProjectModel";
+import { ActivityModel } from "@/app/model/ActivityModel";
 import { Card, CardContent, IconButton, Typography } from "@mui/material";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import { ActivityLanguage } from "./ActivityLanguage";

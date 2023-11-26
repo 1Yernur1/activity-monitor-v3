@@ -28,5 +28,18 @@ export const changeActivityStatusAsTranslator = async (
   }).then((response) => {
     if (response.ok) return response.json();
     throw new Error();
-  })
+  });
+};
+
+export const getProjectById = async (id: number, token: string) => {
+  return fetch(`${url}/projects/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.ok) return response.json();
+    throw new Error();
+  });
 };
