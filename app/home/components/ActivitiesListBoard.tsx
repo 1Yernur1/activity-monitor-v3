@@ -6,23 +6,23 @@ import { getAllActivitiesByProjectId } from "../service/fetcher";
 import Typography from "@mui/material/Typography/Typography";
 import { ActivityColumn } from "./ActivityColumn";
 
-export const ActivitiesListBoard = () => {
+export const ActivitiesListBoard = ({ projectId }: { projectId: string }) => {
   const session = useSession();
   const [activitiesList, setActivitiesList] = useState<ActivityModel[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [isError, setIsError] = useState(false);
   useEffect(() => {
+    setIsFetching(true);
     if (session.data?.user) {
       const {
         user: { idToken },
       } = session.data;
-      getAllActivitiesByProjectId(1, idToken)
+      getAllActivitiesByProjectId(+projectId, idToken)
         .then((data) => setActivitiesList(data))
         .catch(() => setIsError(true))
         .finally(() => setIsFetching(false));
     }
-  }, [session]);
-  if (isFetching) return <Typography>Loading...</Typography>;
+  }, [session, projectId]);
 
   const toDoActivityList = activitiesList.filter(
     (activity) => activity.status === "TODO"
@@ -42,26 +42,24 @@ export const ActivitiesListBoard = () => {
   const archiveActivityList = activitiesList.filter(
     (activity) => activity.status === "ARCHIVE"
   );
+
+  if (isFetching) return <Typography px={2}>Loading...</Typography>;
+
   return (
-    <div className="h-full">
-      <div className="overflow-auto h-full col-start-1 col-span-full">
-        <div className="min-w-[112.5rem] grid grid-cols-6 gap-x-2 px-4">
-          <ActivityColumn status={"To do"} activityList={toDoActivityList} />
-          <ActivityColumn
-            status={"In Progress"}
-            activityList={inProgressActivityList}
-          />
-          <ActivityColumn status={"Review"} activityList={reviewActivityList} />
-          <ActivityColumn
-            status={"Revision"}
-            activityList={revisionActivityList}
-          />
-          <ActivityColumn status={"Done"} activityList={doneActivityList} />
-          <ActivityColumn
-            status={"Archive"}
-            activityList={archiveActivityList}
-          />
-        </div>
+    <div className="overflow-auto h-full col-start-1 col-span-full">
+      <div className="min-w-[112.5rem] grid grid-cols-6 gap-x-2 px-4">
+        <ActivityColumn status={"To do"} activityList={toDoActivityList} />
+        <ActivityColumn
+          status={"In Progress"}
+          activityList={inProgressActivityList}
+        />
+        <ActivityColumn status={"Review"} activityList={reviewActivityList} />
+        <ActivityColumn
+          status={"Revision"}
+          activityList={revisionActivityList}
+        />
+        <ActivityColumn status={"Done"} activityList={doneActivityList} />
+        <ActivityColumn status={"Archive"} activityList={archiveActivityList} />
       </div>
     </div>
   );
