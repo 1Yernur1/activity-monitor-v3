@@ -55,10 +55,14 @@ export const ActivityChangeStatusModal = () => {
         .finally(() => setIsDisabled(false));
     }
   };
+
   return (
     <Dialog fullWidth open={isOpen} onClose={handleClose}>
       <DialogTitle>Change Status</DialogTitle>
       <DialogContent>
+        {isError && (
+          <p className="mb-2 text-red-500 text-base">Something wrong</p>
+        )}
         <Autocomplete
           options={statusList}
           value={statusList.find((status) => status.value === selectedStatus)}

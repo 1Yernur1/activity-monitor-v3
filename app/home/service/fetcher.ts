@@ -12,7 +12,10 @@ export const getAllProjects = async (token: string) => {
   });
 };
 
-export const getAllActivitiesByProjectId = async (projectId: number, token: string) => {
+export const getAllActivitiesByProjectId = async (
+  projectId: number,
+  token: string
+) => {
   return fetch(`${url}/activities/project/${projectId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -24,7 +27,7 @@ export const getAllActivitiesByProjectId = async (projectId: number, token: stri
   });
 };
 
-export const changeActivityStatusAsManger= async (
+export const changeActivityStatusAsManger = async (
   id: number,
   status: string,
   token: string
@@ -39,5 +42,68 @@ export const changeActivityStatusAsManger= async (
   }).then((response) => {
     if (response.ok) return response.json();
     throw new Error();
+  });
+};
+
+export const getAllTranslators = async (token: string) => {
+  return fetch(`${url}/users/translators`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.ok) return response.json();
+    throw new Error();
+  });
+};
+
+export const getAllManagers = async (token: string) => {
+  return fetch(`${url}/users/projectManagers`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.ok) return response.json();
+    throw new Error();
+  });
+};
+
+export const getAllFreeChiefEditors = async (token: string) => {
+  return fetch(`${url}/users/chiefEditors/free`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.ok) return response.json();
+    throw new Error();
+  });
+};
+
+export const getActivityById = async (id: number, token: string) => {
+  return fetch(`${url}/activities/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.ok) return response.json();
+    throw new Error();
+  });
+};
+
+export const changeActivityAsManager = async (
+  id: number,
+  body: any,
+  token: string
+) => {
+  return fetch(`${url}/activities/${id}/updateByManager`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
   });
 };

@@ -11,6 +11,7 @@ export const ActivitiesListBoard = ({ projectId }: { projectId: string }) => {
   const [activitiesList, setActivitiesList] = useState<ActivityModel[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [isError, setIsError] = useState(false);
+
   useEffect(() => {
     setIsFetching(true);
     if (session.data?.user) {
@@ -43,7 +44,12 @@ export const ActivitiesListBoard = ({ projectId }: { projectId: string }) => {
     (activity) => activity.status === "ARCHIVE"
   );
 
-  if (isFetching) return <Typography px={2} variant="h6" mb={"1rem"}>Loading...</Typography>;
+  if (isFetching)
+    return (
+      <Typography px={2} variant="h6" mb={"1rem"}>
+        Loading...
+      </Typography>
+    );
 
   return (
     <div className="overflow-auto h-full col-start-1 col-span-full">
