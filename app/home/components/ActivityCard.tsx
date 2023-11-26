@@ -8,6 +8,7 @@ import { Card, CardContent, IconButton, Typography } from "@mui/material";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import { FloatingMenu } from "./FloatingMenu";
 import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export const ActivityCard = ({
   activity: {
@@ -24,14 +25,29 @@ export const ActivityCard = ({
 }: {
   activity: ActivityModel;
 }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isOpen = Boolean(anchorEl);
 
   const handleClose = () => setAnchorEl(null);
   const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(event.currentTarget);
-  const handleClickEdit = () => {};
-  const handleClickChangeStatus = () => {};
+  const handleClickEdit = () => {
+    handleClose();
+    const params = new URLSearchParams(searchParams);
+    params.set("activityId", id.toString());
+    params.set("edit", "true");
+    router.replace(`${pathname}?${params}`);
+  };
+  const handleClickChangeStatus = () => {
+    handleClose();
+    const params = new URLSearchParams(searchParams);
+    params.set("activityId", id.toString());
+    params.set("changeStatus", status);
+    router.replace(`${pathname}?${params}`);
+  };
   return (
     <>
       <Card sx={{ width: 275 }}>
