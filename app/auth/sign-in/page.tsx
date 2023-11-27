@@ -30,7 +30,9 @@ export default function Page() {
   };
   return (
     <Suspense fallback={<Loading />}>
-      <SignInForm {...{ handleSubmit, isFailedSubmit, isDisabled }} />
+      <div className="h-screen grid place-items-center">
+        <SignInForm {...{ handleSubmit, isFailedSubmit, isDisabled }} />
+      </div>
     </Suspense>
   );
 }

@@ -175,7 +175,11 @@ export const ProjectEditModal = () => {
     </>
   );
 
-  const handleClose = () => router.replace(pathname);
+  const handleClose = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete("editProject");
+    router.replace(`${pathname}?${params}`);
+  };
   return (
     <Dialog fullWidth open={isOpen} onClose={handleClose}>
       <DialogTitle>Edit Project</DialogTitle>

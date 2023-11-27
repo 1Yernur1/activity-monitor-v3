@@ -44,7 +44,11 @@ export const ActivityChangeStatusModal = () => {
     }
   }, []);
 
-  const handleClose = () => router.replace(pathname);
+  const handleClose = () =>  {
+    const params = new URLSearchParams(searchParams);
+    params.delete("changeStatus");
+    router.replace(`${pathname}?${params}`);
+  }
 
   const handleChangeStatus = () => {
     setIsDisabled(true);

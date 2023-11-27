@@ -158,3 +158,16 @@ export const getProjectById = (id: string, token: string) => {
     throw new Error();
   });
 };
+
+export const addActivityDocument = (id: number, token: string, body: any) => {
+  return fetch(`${url}/activities/${id}/docx`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: body,
+  }).then((response) => {
+    if (response.ok) return response.json();
+    throw new Error();
+  });
+};

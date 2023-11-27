@@ -7,6 +7,7 @@ export const FloatingMenu = ({
   handleClose,
   handleClickEdit,
   handleClickChangeStatus,
+  handleAddDoc,
 }: {
   isOpen: boolean;
   status: string;
@@ -14,6 +15,7 @@ export const FloatingMenu = ({
   handleClose: () => void;
   handleClickEdit: () => void;
   handleClickChangeStatus: () => void;
+  handleAddDoc: () => void;
 }) => {
   const managerStatusList = ["TODO", "IN_PROGRESS"];
   const isChangeableStatus = managerStatusList.includes(status);
@@ -23,6 +25,7 @@ export const FloatingMenu = ({
       {isChangeableStatus && (
         <MenuItem onClick={handleClickChangeStatus}>Change Status</MenuItem>
       )}
+      <MenuItem onClick={handleAddDoc}>Add Document</MenuItem>
     </Menu>
   );
 };

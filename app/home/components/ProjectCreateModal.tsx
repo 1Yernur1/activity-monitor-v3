@@ -55,7 +55,11 @@ export const ProjectCreateModal = () => {
     }
   }, [session]);
 
-  const handleClose = () => router.replace(pathname);
+  const handleClose = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete("createProject");
+    router.replace(`${pathname}?${params}`);
+  };
 
   const handleCreate = () => {
     setIsDisabled(true);

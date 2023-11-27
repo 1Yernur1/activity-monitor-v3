@@ -10,6 +10,7 @@ import { ActivityChangeStatusModal } from "./components/ActivityChangeStatusModa
 import { ActivityCreateModal } from "./components/ActivityCreateModal";
 import { ProjectCreateModal } from "./components/ProjectCreateModal";
 import { ProjectEditModal } from "./components/ProjectEditModal";
+import { ActivityDocumentModal } from "./components/ActivityDocumnetModal";
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -33,6 +34,7 @@ export default function Page() {
       {searchParams.has("create") && <ActivityCreateModal />}
       {searchParams.has("createProject") && <ProjectCreateModal />}
       {searchParams.has("editProject") && <ProjectEditModal />}
+      {searchParams.has("addDoc") && <ActivityDocumentModal />}
     </Suspense>
   );
 }

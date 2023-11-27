@@ -56,7 +56,11 @@ export const ActivityCreateModal = () => {
     }
   }, [session]);
 
-  const handleClose = () => router.replace(pathname);
+  const handleClose = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete("create");
+    router.replace(`${pathname}?${params}`);
+  };
 
   const handleCreate = () => {
     setIsDisabled(true);

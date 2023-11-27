@@ -4,9 +4,15 @@ import { ActivityDate } from "@/app/translate/components/ActivityDate";
 import { ActivityLanguage } from "@/app/translate/components/ActivityLanguage";
 import { ActivityTargetLanguage } from "@/app/translate/components/ActivityTargetLanguage";
 import { ActivityTranslator } from "@/app/translate/components/ActivityTranslator";
-import { Card, CardContent, IconButton, Typography } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@mui/material";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
-import { FloatingMenu } from "./FloatingMenu";
 import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -18,8 +24,6 @@ export const ActivityCard = ({
     targetLanguage,
     createdAt,
     status,
-    projectName,
-    projectId,
     translator: { firstName, lastName },
   },
 }: {
@@ -30,6 +34,8 @@ export const ActivityCard = ({
   const searchParams = useSearchParams();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isOpen = Boolean(anchorEl);
+  const managerStatusList = ["TODO", "IN_PROGRESS"];
+  const isChangeableStatus = managerStatusList.includes(status);
 
   const handleClose = () => setAnchorEl(null);
   const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) =>
@@ -46,6 +52,14 @@ export const ActivityCard = ({
     const params = new URLSearchParams(searchParams);
     params.set("activityId", id.toString());
     params.set("changeStatus", status);
+    router.replace(`${pathname}?${params}`);
+  };
+
+  const handleAddDoc = () => {
+    handleClose();
+    const params = new URLSearchParams(searchParams);
+    params.set("activityId", id.toString());
+    params.set("addDoc", "true");
     router.replace(`${pathname}?${params}`);
   };
   return (
@@ -66,16 +80,14 @@ export const ActivityCard = ({
           </div>
         </CardContent>
       </Card>
-      <FloatingMenu
-        {...{
-          isOpen,
-          anchorEl,
-          status,
-          handleClose,
-          handleClickEdit,
-          handleClickChangeStatus,
-        }}
-      />
+
+      <Menu open={isOpen} anchorEl={anchorEl} onClose={handleClose}>
+        <MenuItem onClick={handleClickEdit}>Edit</MenuItem>
+        {isChangeableStatus && (
+          <MenuItem onClick={handleClickChangeStatus}>Change Status</MenuItem>
+        )}
+        <MenuItem onClick={handleAddDoc}>Add Document</MenuItem>
+      </Menu>
     </>
   );
 };

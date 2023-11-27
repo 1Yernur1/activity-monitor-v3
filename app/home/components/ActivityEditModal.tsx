@@ -55,7 +55,11 @@ export const ActivityEditModal = () => {
     }
   }, [session]);
 
-  const handleClose = () => router.replace(pathname);
+  const handleClose = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete("edit");
+    router.replace(`${pathname}?${params}`);
+  };
 
   const handleChangeActivityTitle = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
