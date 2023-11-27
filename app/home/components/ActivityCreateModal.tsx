@@ -1,5 +1,4 @@
 "use client";
-import { ProfileModel } from "@/app/model/ProfileModel";
 import {
   Autocomplete,
   Button,
@@ -10,103 +9,31 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ChangeEvent, useEffect, useState } from "react";
-import {
-  changeActivityAsManager,
-  getActivityById,
-  getAllTranslators,
-} from "../service/fetcher";
 import { useSession } from "next-auth/react";
-import { ActivityModel } from "@/app/model/ActivityModel";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { staticLanguagesList } from "../service/data";
+import { ProfileModel } from "@/app/model/ProfileModel";
+import { ActivityModel } from "@/app/model/ActivityModel";
+import { createActivity, getAllTranslators } from "../service/fetcher";
 
-export const ActivityEditModal = () => {
+export const ActivityCreateModal = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const session = useSession();
-  const isOpen = searchParams.has("edit");
-  const activityId = searchParams.get("activityId");
-  const [activity, setActivity] = useState<ActivityModel | null>(null);
-  // const [chiefEditorList, setChiefEditorList] = useState<ProfileModel[]>([]);
-  // const [managersList, setManagersList] = useState<ProfileModel[]>([]);
-  const [translatorList, setTranslatorList] = useState<ProfileModel[]>([]);
+  const isOpen = searchParams.has("create");
+  const projectId = searchParams.get("projectId") || 1;
   const [isFetching, setIsFetching] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [activity, setActivity] = useState<ActivityModel>({
+    projectId: projectId,
+  } as ActivityModel);
+  const [translatorList, setTranslatorList] = useState<ProfileModel[]>([]);
   const [languageList, setLanguageList] = useState(staticLanguagesList);
   const [targetLanguageList, setTargetLanguageList] =
     useState(staticLanguagesList);
   const [isDisabled, setIsDisabled] = useState(false);
-
-  useEffect(() => {
-    setIsFetching(true);
-    if (session.data?.user && activityId) {
-      const {
-        user: { idToken },
-      } = session.data;
-
-      Promise.all([
-        getActivityById(+activityId, idToken)
-          .then((data) => setActivity(data))
-          .catch(() => setIsError(true)),
-        getAllTranslators(idToken)
-          .then((data) => setTranslatorList(data))
-          .catch(() => setIsError(true)),
-      ]).finally(() => setIsFetching(false));
-
-      // getAllFreeChiefEditors(idToken)
-      //   .then((data) => setChiefEditorList(data))
-      //   .catch(() => setIsError(true))
-      //   .finally(() => setIsFetching(false));
-      // getAllManagers(idToken)
-      //   .then((data) => setManagersList(data))
-      //   .catch(() => setIsError(true))
-      //   .finally(() => setIsFetching(false));
-    }
-  }, [session]);
-
-  const handleClose = () => router.replace(pathname);
-
-  const handleChangeActivityTitle = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setActivity((prevState) => {
-      return (
-        prevState && {
-          ...prevState,
-          title: e.target.value,
-        }
-      );
-    });
-  };
-
-  const handleSave = () => {
-    setIsDisabled(true);
-    if (session.data?.user && activity && activityId) {
-      const {
-        user: { idToken },
-      } = session.data;
-      const {
-        projectId,
-        title,
-        language,
-        targetLanguage,
-        translator: { id },
-      } = activity;
-      const body = {
-        title: title,
-        language: language,
-        targetLanguage: targetLanguage,
-        translatorId: id,
-      };
-      const params = new URLSearchParams();
-      changeActivityAsManager(+activityId, body, idToken)
-        .then(() => window.location.replace(`/?projectId=${projectId}`))
-        .catch(() => setIsError(true))
-        .finally(() => setIsDisabled(false));
-    }
-  };
 
   const translatorsListView = translatorList.map(
     ({ firstName, lastName, id }: ProfileModel) => ({
@@ -115,19 +42,48 @@ export const ActivityEditModal = () => {
     })
   );
 
-  const translatorView = activity?.translator?.id
-    ? translatorsListView.find(
-        (translator) => translator.value === activity.translator.id
-      )
-    : { label: "", value: "" };
+  useEffect(() => {
+    setIsFetching(true);
+    if (session.data?.user) {
+      const {
+        user: { idToken },
+      } = session.data;
 
-  const languageView = activity?.language
-    ? languageList.find((lang) => lang.value === activity.language)
-    : { label: "", value: "" };
+      getAllTranslators(idToken)
+        .then((data) => setTranslatorList(data))
+        .catch(() => setIsError(true))
+        .finally(() => setIsFetching(false));
+    }
+  }, [session]);
 
-  const targetLanguageView = activity?.targetLanguage
-    ? targetLanguageList.find((lang) => lang.value === activity.targetLanguage)
-    : { label: "", value: "" };
+  const handleClose = () => router.replace(pathname);
+
+  const handleCreate = () => {
+    setIsDisabled(true);
+    if (session.data?.user && activity) {
+      const {
+        user: { idToken },
+      } = session.data;
+      const {
+        title,
+        language,
+        targetLanguage,
+        translator: { id },
+      } = activity;
+      const body = {
+        projectId: projectId,
+        title: title,
+        language: language,
+        targetLanguage: targetLanguage,
+        translatorId: id,
+      };
+      const params = new URLSearchParams();
+      createActivity(body, idToken)
+        .then(() => window.location.replace(`/?projectId=${projectId}`))
+        .catch(() => setIsError(true))
+        .finally(() => setIsDisabled(false));
+    }
+  };
 
   const loading = isFetching && <Typography>Loading...</Typography>;
   const content = !(isFetching || isError) && (
@@ -138,15 +94,22 @@ export const ActivityEditModal = () => {
         margin="dense"
         variant="standard"
         fullWidth
-        value={activity?.title}
-        onChange={handleChangeActivityTitle}
+        onChange={(e) =>
+          setActivity((prevState) => {
+            return (
+              prevState && {
+                ...prevState,
+                title: e.target.value,
+              }
+            );
+          })
+        }
       />
       <Autocomplete
         renderInput={(params) => (
           <TextField {...params} variant="standard" label="Select language" />
         )}
         options={languageList}
-        value={languageView}
         onChange={(e, newValue) => {
           if (newValue?.value) {
             setActivity((prevState) => {
@@ -169,7 +132,6 @@ export const ActivityEditModal = () => {
           />
         )}
         options={targetLanguageList}
-        value={targetLanguageView}
         onChange={(e, newValue) => {
           if (newValue?.value) {
             setActivity((prevState) => {
@@ -184,17 +146,30 @@ export const ActivityEditModal = () => {
         }}
       />
       <Autocomplete
-        value={translatorView}
         renderInput={(params) => (
           <TextField {...params} variant="standard" label="Select translator" />
         )}
         options={translatorsListView}
+        onChange={(e, newValue) => {
+          if (newValue?.value) {
+            setActivity((prevState) => {
+              return {
+                ...prevState,
+                translator: {
+                  ...prevState.translator,
+                  id: newValue.value,
+                },
+              };
+            });
+          }
+        }}
       />
     </>
   );
+
   return (
     <Dialog fullWidth open={isOpen} onClose={handleClose}>
-      <DialogTitle>Edit Activity</DialogTitle>
+      <DialogTitle>Create Activity</DialogTitle>
       <DialogContent>
         {isError && (
           <p className="mb-2 text-red-500 text-base">Something wrong</p>
@@ -204,8 +179,12 @@ export const ActivityEditModal = () => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button variant="contained" disabled={isDisabled} onClick={handleSave}>
-          Save
+        <Button
+          variant="contained"
+          disabled={isDisabled}
+          onClick={handleCreate}
+        >
+          Create
         </Button>
       </DialogActions>
     </Dialog>

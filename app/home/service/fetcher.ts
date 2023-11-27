@@ -107,3 +107,14 @@ export const changeActivityAsManager = async (
     body: JSON.stringify(body),
   });
 };
+
+export const createActivity = async (body: any, token: string) => {
+  return fetch(`${url}/activities`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+};

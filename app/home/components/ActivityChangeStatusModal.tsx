@@ -20,7 +20,8 @@ export const ActivityChangeStatusModal = () => {
   const searchParams = useSearchParams();
   const { data } = useSession();
   const isOpen = searchParams.has("changeStatus");
-  const id = searchParams.get("activityId");
+  const activityId = searchParams.get("activityId");
+  const projectId = searchParams.get("projectId") || 1;
   const initialStatus = searchParams.get("changeStatus");
   const [selectedStatus, setSelectedStatus] = useState(initialStatus);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -47,10 +48,10 @@ export const ActivityChangeStatusModal = () => {
 
   const handleChangeStatus = () => {
     setIsDisabled(true);
-    if (data?.user && selectedStatus && id) {
+    if (data?.user && selectedStatus && activityId) {
       const { idToken } = data.user;
-      changeActivityStatusAsManger(+id, selectedStatus, idToken)
-        .then(() => window.location.replace("/"))
+      changeActivityStatusAsManger(+activityId, selectedStatus, idToken)
+        .then(() => window.location.replace(`/?projectId=${projectId}`))
         .catch(() => setIsError(true))
         .finally(() => setIsDisabled(false));
     }
