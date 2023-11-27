@@ -2,13 +2,19 @@
 import { ActivityModel } from "@/app/model/ActivityModel";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { getAllActivitiesByProjectId } from "../service/fetcher";
+import {
+  getAllActivitiesByProjectId,
+  getProjectById,
+} from "../service/fetcher";
 import Typography from "@mui/material/Typography/Typography";
 import { ActivityColumn } from "./ActivityColumn";
+import { ProjectModel } from "@/app/model/ProjectModel";
+import { ProjectDisplay } from "./ProjectDisplay";
 
 export const ActivitiesListBoard = ({ projectId }: { projectId: string }) => {
   const session = useSession();
   const [activitiesList, setActivitiesList] = useState<ActivityModel[]>([]);
+  const [project, setProject] = useState<ProjectModel>({} as ProjectModel);
   const [isFetching, setIsFetching] = useState(true);
   const [isError, setIsError] = useState(false);
 
@@ -18,10 +24,14 @@ export const ActivitiesListBoard = ({ projectId }: { projectId: string }) => {
       const {
         user: { idToken },
       } = session.data;
-      getAllActivitiesByProjectId(+projectId, idToken)
-        .then((data) => setActivitiesList(data))
-        .catch(() => setIsError(true))
-        .finally(() => setIsFetching(false));
+      Promise.all([
+        getAllActivitiesByProjectId(+projectId, idToken)
+          .then((data) => setActivitiesList(data))
+          .catch(() => setIsError(true)),
+        getProjectById(projectId, idToken)
+          .then((data) => setProject(data))
+          .catch(() => setIsError(true)),
+      ]).finally(() => setIsFetching(false));
     }
   }, [session, projectId]);
 
@@ -53,6 +63,7 @@ export const ActivitiesListBoard = ({ projectId }: { projectId: string }) => {
 
   return (
     <div className="overflow-auto h-full col-start-1 col-span-full">
+      <ProjectDisplay project={project} />
       <div className="min-w-[112.5rem] grid grid-cols-6 gap-x-2 px-4">
         <ActivityColumn status={"To do"} activityList={toDoActivityList} />
         <ActivityColumn
