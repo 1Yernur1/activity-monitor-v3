@@ -118,3 +118,17 @@ export const createActivity = async (body: any, token: string) => {
     body: JSON.stringify(body),
   });
 };
+
+export const createProject = async (body: any, token: string) => {
+  return fetch(`${url}/projects`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  }).then((response) => {
+    if (response.ok) return response.json();
+    throw new Error();
+  });
+};

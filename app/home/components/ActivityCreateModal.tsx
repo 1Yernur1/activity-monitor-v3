@@ -77,7 +77,7 @@ export const ActivityCreateModal = () => {
         targetLanguage: targetLanguage,
         translatorId: id,
       };
-      const params = new URLSearchParams();
+
       createActivity(body, idToken)
         .then(() => window.location.replace(`/?projectId=${projectId}`))
         .catch(() => setIsError(true))

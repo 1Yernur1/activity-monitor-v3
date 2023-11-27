@@ -29,8 +29,6 @@ export const ActivityEditModal = () => {
   const isOpen = searchParams.has("edit");
   const activityId = searchParams.get("activityId");
   const [activity, setActivity] = useState<ActivityModel | null>(null);
-  // const [chiefEditorList, setChiefEditorList] = useState<ProfileModel[]>([]);
-  // const [managersList, setManagersList] = useState<ProfileModel[]>([]);
   const [translatorList, setTranslatorList] = useState<ProfileModel[]>([]);
   const [isFetching, setIsFetching] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -54,15 +52,6 @@ export const ActivityEditModal = () => {
           .then((data) => setTranslatorList(data))
           .catch(() => setIsError(true)),
       ]).finally(() => setIsFetching(false));
-
-      // getAllFreeChiefEditors(idToken)
-      //   .then((data) => setChiefEditorList(data))
-      //   .catch(() => setIsError(true))
-      //   .finally(() => setIsFetching(false));
-      // getAllManagers(idToken)
-      //   .then((data) => setManagersList(data))
-      //   .catch(() => setIsError(true))
-      //   .finally(() => setIsFetching(false));
     }
   }, [session]);
 

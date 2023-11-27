@@ -5,6 +5,7 @@ import AuthProvider from "./context/AuthProvider";
 import CustomThemeProvider from "./context/CustomThemeProvider";
 import StyleProvider from "./context/StyleProvider";
 import PlainCssPriorityProvider from "./context/PlainCssPriorityProvider";
+import DateProvider from "./context/DateProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +25,9 @@ export default function RootLayout({
         <StyleProvider>
           <PlainCssPriorityProvider>
             <CustomThemeProvider>
-              <AuthProvider>{children}</AuthProvider>
+              <DateProvider>
+                <AuthProvider>{children}</AuthProvider>
+              </DateProvider>
             </CustomThemeProvider>
           </PlainCssPriorityProvider>
         </StyleProvider>

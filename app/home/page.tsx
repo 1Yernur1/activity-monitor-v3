@@ -8,6 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { ActivityEditModal } from "./components/ActivityEditModal";
 import { ActivityChangeStatusModal } from "./components/ActivityChangeStatusModal";
 import { ActivityCreateModal } from "./components/ActivityCreateModal";
+import { ProjectCreateModal } from "./components/ProjectCreateModal";
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -29,6 +30,7 @@ export default function Page() {
       {searchParams.has("edit") && <ActivityEditModal />}
       {searchParams.has("changeStatus") && <ActivityChangeStatusModal />}
       {searchParams.has("create") && <ActivityCreateModal />}
+      {searchParams.has("createProject") && <ProjectCreateModal />}
     </Suspense>
   );
 }

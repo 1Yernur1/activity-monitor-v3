@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { getAllProjects } from "../service/fetcher";
 import { ProjectsListView } from "./ProjectsListView";
 import Typography from "@mui/material/Typography/Typography";
+import { ProjectCreateButton } from "./ProjectCreateButton";
 
 export const SideBar = () => {
   const session = useSession();
@@ -25,7 +26,10 @@ export const SideBar = () => {
   }, [session]);
 
   const content = !(isFetching || isError) && (
-    <ProjectsListView projectsList={projectsList} />
+    <>
+      <ProjectsListView projectsList={projectsList} />
+      <ProjectCreateButton />
+    </>
   );
   const loading = isFetching && <Typography>Loading...</Typography>;
   const error = isError && <Typography>Something wrong</Typography>;
