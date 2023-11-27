@@ -173,14 +173,30 @@ export const ActivityEditModal = () => {
         }}
       />
       <Autocomplete
-        value={translatorView}
+        defaultValue={translatorView}
         renderInput={(params) => (
           <TextField {...params} variant="standard" label="Select translator" />
         )}
         options={translatorsListView}
+        onChange={(e, newValue) => {
+          if (newValue?.value) {
+            setActivity((prevState) => {
+              return (
+                prevState && {
+                  ...prevState,
+                  translator: {
+                    ...prevState.translator,
+                    id: newValue.value,
+                  },
+                }
+              );
+            });
+          }
+        }}
       />
     </>
   );
+
   return (
     <Dialog fullWidth open={isOpen} onClose={handleClose}>
       <DialogTitle>Edit Activity</DialogTitle>

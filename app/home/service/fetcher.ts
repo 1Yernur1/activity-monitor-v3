@@ -132,3 +132,29 @@ export const createProject = async (body: any, token: string) => {
     throw new Error();
   });
 };
+
+export const editProject = async (id: number, body: any, token: string) => {
+  return fetch(`${url}/projects/${id}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  }).then((response) => {
+    if (response.ok) return response.json();
+    throw new Error();
+  });
+};
+
+export const getProjectById = (id: string, token: string) => {
+  return fetch(`${url}/projects/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.ok) return response.json();
+    throw new Error();
+  });
+};

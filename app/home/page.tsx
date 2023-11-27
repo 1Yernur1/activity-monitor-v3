@@ -9,6 +9,7 @@ import { ActivityEditModal } from "./components/ActivityEditModal";
 import { ActivityChangeStatusModal } from "./components/ActivityChangeStatusModal";
 import { ActivityCreateModal } from "./components/ActivityCreateModal";
 import { ProjectCreateModal } from "./components/ProjectCreateModal";
+import { ProjectEditModal } from "./components/ProjectEditModal";
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -31,6 +32,7 @@ export default function Page() {
       {searchParams.has("changeStatus") && <ActivityChangeStatusModal />}
       {searchParams.has("create") && <ActivityCreateModal />}
       {searchParams.has("createProject") && <ProjectCreateModal />}
+      {searchParams.has("editProject") && <ProjectEditModal />}
     </Suspense>
   );
 }
