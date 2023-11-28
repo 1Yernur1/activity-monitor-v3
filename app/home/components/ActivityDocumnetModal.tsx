@@ -19,7 +19,7 @@ export const ActivityDocumentModal = () => {
   const searchParams = useSearchParams();
   const session = useSession();
   const isOpen = searchParams.has("addDoc");
-  const activityId = searchParams.has("activityId");
+  const activityId = searchParams.get("activityId");
   const [activity, setActivity] = useState<ActivityModel | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +28,7 @@ export const ActivityDocumentModal = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    if (session.data?.user) {
+    if (session.data?.user && activityId) {
       const {
         user: { idToken },
       } = session.data;
@@ -82,7 +82,9 @@ export const ActivityDocumentModal = () => {
       <DialogTitle>Select document</DialogTitle>
       <DialogContent>
         {isError && (
-          <p className="mb-2 text-red-500 text-base">Something wrong</p>
+          <p className="mb-2 text-green-500 text-base">
+            Document success loaded
+          </p>
         )}
         {loading}
         {content}

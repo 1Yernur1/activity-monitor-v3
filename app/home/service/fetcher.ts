@@ -167,7 +167,7 @@ export const addActivityDocument = (id: number, token: string, body: any) => {
     },
     body: body,
   }).then((response) => {
-    if (response.ok) return response.json();
-    throw new Error();
+    if (response.status === 200) return response.json();
+    else throw new Error();
   });
 };
