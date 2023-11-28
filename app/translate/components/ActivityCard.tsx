@@ -1,15 +1,22 @@
 "use client";
 import { ActivityModel } from "@/app/model/ActivityModel";
-import { Card, CardContent, IconButton, Typography } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@mui/material";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import { ActivityLanguage } from "./ActivityLanguage";
 import { ActivityTargetLanguage } from "./ActivityTargetLanguage";
 import { ActivityDate } from "./ActivityDate";
 import { ActivityTranslator } from "./ActivityTranslator";
 import { useState } from "react";
-import { FloatingMenu } from "./FloatingMenu";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ActivityProject } from "./ActivityProject";
+import { ActivityDocStatus } from "./ActivityDocStatus";
 
 export const ActivityCard = ({
   activity: {
@@ -21,6 +28,7 @@ export const ActivityCard = ({
     status,
     projectName,
     projectId,
+    docxUploaded,
     translator: { firstName, lastName },
   },
 }: {
@@ -31,11 +39,13 @@ export const ActivityCard = ({
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const translatorStatusList = ["TODO", "IN_PROGRESS", "REVISION"];
+  const isChangeableStatus = translatorStatusList.includes(status);
 
-  const onClose = () => setAnchorEl(null);
+  const handleClose = () => setAnchorEl(null);
 
-  const onClick = () => {
-    onClose();
+  const handleChangeStatus = () => {
+    handleClose();
     const params = new URLSearchParams(searchParams);
     params.set("isOpen", "true");
     params.set("activityId", id.toString());
@@ -43,13 +53,18 @@ export const ActivityCard = ({
     router.replace(`${pathname}?${params.toString()}`);
   };
   const handleShow = () => {
-    onClose();
+    handleClose();
     const params = new URLSearchParams(searchParams);
     params.set("projectId", projectId.toString());
     router.replace(`${pathname}?${params.toString()}`);
   };
   const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(event.currentTarget);
+
+  const handleTranslate = () => {
+    handleClose();
+    router.push(`/translate/${id}`);
+  };
 
   return (
     <>
@@ -67,13 +82,19 @@ export const ActivityCard = ({
             <ActivityDate description={"Created Date"} date={createdAt} />
             <ActivityTranslator {...{ firstName, lastName }} />
             <ActivityProject projectName={projectName} />
+            <ActivityDocStatus docxUploaded={docxUploaded} />
           </div>
         </CardContent>
       </Card>
-      <FloatingMenu
-        {...{ open, anchorEl, onClose, onClick, status }}
-        handleShow={handleShow}
-      />
+      <Menu {...{ open, anchorEl, onClose: handleClose }}>
+        <MenuItem onClick={handleShow}>Project Info</MenuItem>
+        {isChangeableStatus && (
+          <MenuItem onClick={handleChangeStatus}>Change Status</MenuItem>
+        )}
+        {docxUploaded && (
+          <MenuItem onClick={handleTranslate}>Translate</MenuItem>
+        )}
+      </Menu>
     </>
   );
 };

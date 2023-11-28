@@ -65,7 +65,10 @@ export const ActivityDocumentModal = () => {
       formData.append("docx", selectedFile);
       addActivityDocument(+activityId, idToken, formData)
         .then(() => window.location.replace(`/?projectId=${projectId}`))
-        .catch(() => setIsError(true))
+        .catch(() => {
+          setIsError(true);
+          window.location.replace(`/?projectId=${projectId}`);
+        })
         .finally(() => {
           setIsLoading(false);
           setIsDisabled(false);

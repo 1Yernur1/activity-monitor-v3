@@ -43,3 +43,16 @@ export const getProjectById = async (id: number, token: string) => {
     throw new Error();
   });
 };
+
+export const getAllTextItemsByActivity = (id: number, token: string) => {
+  return fetch(`${url}/textItems/activity/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.ok) return response.json();
+    throw new Error();
+  });
+};
