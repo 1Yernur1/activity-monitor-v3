@@ -28,7 +28,7 @@ export const ActivityCard = ({
 }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { replace } = useRouter();
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -40,13 +40,13 @@ export const ActivityCard = ({
     params.set("isOpen", "true");
     params.set("activityId", id.toString());
     params.set("status", status);
-    replace(`${pathname}?${params.toString()}`);
+    router.replace(`${pathname}?${params.toString()}`);
   };
   const handleShow = () => {
     onClose();
     const params = new URLSearchParams(searchParams);
     params.set("projectId", projectId.toString());
-    replace(`${pathname}?${params.toString()}`);
+    router.replace(`${pathname}?${params.toString()}`);
   };
   const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(event.currentTarget);

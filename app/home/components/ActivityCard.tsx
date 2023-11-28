@@ -15,6 +15,7 @@ import {
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ActivityDocStatus } from "./ActivityDocStatus";
 
 export const ActivityCard = ({
   activity: {
@@ -24,6 +25,7 @@ export const ActivityCard = ({
     targetLanguage,
     createdAt,
     status,
+    docxUploaded,
     translator: { firstName, lastName },
   },
 }: {
@@ -77,6 +79,7 @@ export const ActivityCard = ({
             <ActivityTargetLanguage targetLanguage={targetLanguage} />
             <ActivityDate description={"Created Date"} date={createdAt} />
             <ActivityTranslator {...{ firstName, lastName }} />
+            <ActivityDocStatus docxUploaded={docxUploaded} />
           </div>
         </CardContent>
       </Card>
