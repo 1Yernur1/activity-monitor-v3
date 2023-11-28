@@ -25,4 +25,4 @@ export default withAuth(
     },
   }
 );
-export const config = { matcher: ["/", "/home", "/translate"] };
+export const config = { matcher: ["/", "/home", "/translate ", "/translate/:activityId"] };

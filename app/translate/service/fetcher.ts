@@ -56,3 +56,34 @@ export const getAllTextItemsByActivity = (id: number, token: string) => {
     throw new Error();
   });
 };
+
+export const createTranslateForTranslationItem = (
+  id: number,
+  body: any,
+  token: string
+) => {
+  return fetch(`${url}/textItems/${id}/translationItems`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  }).then((response) => {
+    if (response.ok) return response.json();
+    throw new Error();
+  });
+};
+
+export const getTranslationItemHistory = (itemId: number, token: string) => {
+  return fetch(`${url}/textItems/${itemId}/translationItems`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.ok) return response.json();
+    throw new Error();
+  });
+};

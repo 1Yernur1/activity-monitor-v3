@@ -192,7 +192,7 @@ export const ProjectEditModal = () => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button variant="contained" onClick={handleEdit}>
+        <Button variant="contained" onClick={handleEdit} disabled={isDisabled}>
           Save
         </Button>
       </DialogActions>
