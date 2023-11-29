@@ -16,4 +16,5 @@ export interface ActivityModel {
   docxUploaded: boolean;
   createdAt: string;
   updatedAt: string;
+  isLoggedToday: boolean;
 }

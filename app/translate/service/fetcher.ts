@@ -87,3 +87,40 @@ export const getTranslationItemHistory = (itemId: number, token: string) => {
     throw new Error();
   });
 };
+
+export const createActivityLogDaily = (
+  id: number,
+  body: any,
+  token: string
+) => {
+  return fetch(`${url}/activities/${id}/log/daily`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  }).then((response) => {
+    if (response.ok) return response.json();
+    throw new Error();
+  });
+};
+
+
+export const createActivityLogWeekly = (
+  id: number,
+  body: any,
+  token: string
+) => {
+  return fetch(`${url}/activities/${id}/log/weekly`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  }).then((response) => {
+    if (response.ok) return response.json();
+    throw new Error();
+  });
+};

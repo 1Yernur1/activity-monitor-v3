@@ -5,6 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getProjectById } from "../service/fetcher";
 import { ProjectModel } from "@/app/model/ProjectModel";
+import { getFormattedDate } from "../service/formatter";
 
 export const ProjectInfoModal = () => {
   const router = useRouter();
@@ -15,6 +16,8 @@ export const ProjectInfoModal = () => {
   const [isFetching, setIsFetching] = useState(true);
   const [isError, setIsError] = useState(false);
   const isOpen = searchParams.has("projectId");
+  const createdFormattedDate = getFormattedDate(project.createdAt);
+  const deadlineFormattedDate = getFormattedDate(project.targetDate);
   useEffect(() => {
     if (session.data?.user) {
       const {
@@ -65,6 +68,18 @@ export const ProjectInfoModal = () => {
                 </Typography>
               </div>
             )}
+            <div className="flex justify-between items-center">
+              <Typography variant="body1">Created date:</Typography>
+              <Typography variant="body1" fontWeight={500}>
+                {createdFormattedDate}
+              </Typography>
+            </div>
+            <div className="flex justify-between items-center">
+              <Typography variant="body1">Deadline date:</Typography>
+              <Typography variant="body1" fontWeight={500}>
+                {deadlineFormattedDate}
+              </Typography>
+            </div>
           </div>
         )}
       </DialogContent>

@@ -2,7 +2,6 @@
 import { ProfileModel } from "@/app/model/ProfileModel";
 import {
   Autocomplete,
-  AutocompleteRenderInputParams,
   Button,
   Dialog,
   DialogActions,
@@ -13,7 +12,7 @@ import {
 } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   createProject,
   getAllFreeChiefEditors,
@@ -93,10 +92,10 @@ export const ProjectCreateModal = () => {
     })
   );
 
-  const managerListView = managersList.map(({ firstName, lastName, id }) => ({
-    label: `${firstName} ${lastName}`,
-    value: id,
-  }));
+  // const managerListView = managersList.map(({ firstName, lastName, id }) => ({
+  //   label: `${firstName} ${lastName}`,
+  //   value: id,
+  // }));
 
   const loading = isFetching && <Typography>Loading...</Typography>;
   const content = !(isFetching || isError) && (

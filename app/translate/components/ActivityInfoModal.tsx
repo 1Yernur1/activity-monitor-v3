@@ -5,35 +5,33 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField,
   Typography,
 } from "@mui/material";
-import { useSession } from "next-auth/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getTranslationItemHistory } from "../../service/fetcher";
-import { TranslationTranslateModel } from "@/app/model/TranslationTranlsateModel";
+import { ActivityInfoView } from "./ActivityInfoView";
+import { ActivityModel } from "@/app/model/ActivityModel";
+import { useSession } from "next-auth/react";
+import { getActivityById } from "@/app/home/service/fetcher";
 
-export const TranslateHistoryModal = () => {
+export const ActivityInfoModal = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const session = useSession();
-  const isOpen = searchParams.has("textItemId");
-  const translationItemId = searchParams.get("textItemId");
-  const [translationTranslateList, setTranslationTranslateList] = useState<
-    TranslationTranslateModel[]
-  >([]);
+  const isOpen = searchParams.has("activityInfo");
+  const activityId = searchParams.get("activityInfo");
+  const [activity, setActivity] = useState<ActivityModel>({} as ActivityModel);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
-    if (session.data?.user && translationItemId) {
+    if (session.data?.user && activityId) {
       const { user } = session.data;
       const { idToken } = user;
-      getTranslationItemHistory(+translationItemId, idToken)
-        .then((data) => setTranslationTranslateList(data))
+      getActivityById(+activityId, idToken)
+        .then((data) => setActivity(data))
         .catch(() => setIsError(true))
         .finally(() => setIsLoading(false));
     }
@@ -41,7 +39,7 @@ export const TranslateHistoryModal = () => {
 
   const handleClose = () => {
     const params = new URLSearchParams(searchParams);
-    params.delete("textItemId");
+    params.delete("activityInfo");
     router.replace(`${pathname}?${params}`);
   };
 
@@ -49,29 +47,21 @@ export const TranslateHistoryModal = () => {
   const error = isError && (
     <p className="text-red-500 text-center">Something wrong</p>
   );
-  const content =
-    !(isLoading || isError) &&
-    translationTranslateList.map((translation) => (
-      <TextField
-        multiline
-        disabled
-        fullWidth
-        defaultValue={translation.translationText}
-        key={translation.historyOrdinal}
-      />
-    ));
+
+  const content = !(isLoading || isError) && (
+    <ActivityInfoView activity={activity} />
+  );
+
   return (
     <Dialog fullWidth open={isOpen} onClose={handleClose}>
-      <DialogTitle>History</DialogTitle>
+      <DialogTitle>Activity Info</DialogTitle>
       <DialogContent>
         {loading}
         {content}
         {error}
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} variant="contained">
-          Ok
-        </Button>
+        <Button onClick={handleClose}>Ok</Button>
       </DialogActions>
     </Dialog>
   );

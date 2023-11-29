@@ -31,7 +31,7 @@ export const TranslateItem = ({
       <div key={ordinal} className="flex gap-4 mx-4 my-4">
         <div className="flex-1 flex ">
           <Input
-            defaultValue={text}
+            defaultValue={text.trim()}
             disabled
             fullWidth
             multiline

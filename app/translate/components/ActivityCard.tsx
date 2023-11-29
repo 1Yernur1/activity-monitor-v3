@@ -29,6 +29,7 @@ export const ActivityCard = ({
     projectName,
     projectId,
     docxUploaded,
+    isLoggedToday,
     translator: { firstName, lastName },
   },
 }: {
@@ -41,6 +42,10 @@ export const ActivityCard = ({
   const open = Boolean(anchorEl);
   const translatorStatusList = ["TODO", "IN_PROGRESS", "REVISION"];
   const isChangeableStatus = translatorStatusList.includes(status);
+  const activityShowStatusList = ["IN_PROGRESS", "REVISION"];
+  const notNullIsLogged = isLoggedToday === null && true;
+  const isShowingActivityLog =
+  docxUploaded && !notNullIsLogged && activityShowStatusList.includes(status);
 
   const handleClose = () => setAnchorEl(null);
 
@@ -66,6 +71,19 @@ export const ActivityCard = ({
     router.push(`/translate/${id}`);
   };
 
+  const handleShowActivityLog = () => {
+    handleClose();
+    const params = new URLSearchParams(searchParams);
+    params.set("logInfo", projectId.toString());
+    router.replace(`${pathname}?${params.toString()}`);
+  }
+
+  const handleShowActivityInfo = () => {
+    handleClose();
+    const params = new URLSearchParams(searchParams);
+    params.set("activityInfo", id.toString());
+    router.replace(`${pathname}?${params.toString()}`);
+  }
   return (
     <>
       <Card sx={{ width: 275 }}>
@@ -94,6 +112,8 @@ export const ActivityCard = ({
         {docxUploaded && (
           <MenuItem onClick={handleTranslate}>Translate</MenuItem>
         )}
+        <MenuItem onClick={handleShowActivityInfo}>Activity Info</MenuItem>
+        {isShowingActivityLog && <MenuItem onClick={handleShowActivityLog}>Activity Logging</MenuItem>}
       </Menu>
     </>
   );
