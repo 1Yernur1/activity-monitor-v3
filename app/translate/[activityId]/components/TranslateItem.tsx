@@ -23,6 +23,14 @@ export const TranslateItem = ({
     router.replace(`${pathname}?${params}`);
   };
 
+  const handleShowRemarkHistory = () => {
+    handleClose();
+    const params = new URLSearchParams(searchParams);
+    params.set("showRemark", "true");
+    params.set("textItemId", id.toString());
+    router.replace(`${pathname}?${params}`);
+  };
+
   const handleClose = () => setAnchorEl(null);
   const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(event.currentTarget);
@@ -51,6 +59,7 @@ export const TranslateItem = ({
       </div>
       <Menu open={isOpen} anchorEl={anchorEl} onClose={handleClose}>
         <MenuItem onClick={handleShowHistory}>History</MenuItem>
+        <MenuItem onClick={handleShowRemarkHistory}>Remark</MenuItem>
       </Menu>
     </>
   );

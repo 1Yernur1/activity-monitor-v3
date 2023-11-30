@@ -88,6 +88,19 @@ export const getTranslationItemHistory = (itemId: number, token: string) => {
   });
 };
 
+export const getRemarkHistory = (itemId: number, token: string) => {
+  return fetch(`${url}/textItems/${itemId}/latestTranslationItem/remarks`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.ok) return response.json();
+    throw new Error();
+  });
+};
+
 export const createActivityLogDaily = (
   id: number,
   body: any,

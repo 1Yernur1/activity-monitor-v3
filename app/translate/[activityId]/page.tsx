@@ -5,6 +5,8 @@ import { Header } from "@/app/components/Header";
 import { TranslateBoard } from "./components/TranslateBoard";
 import { useSearchParams } from "next/navigation";
 import { TranslateHistoryModal } from "./components/TranslateHistoryModal";
+import { RemarkHistoryModal } from "./components/RemarkHistoryModal";
+
 
 export default function Page({ params }: { params: { activityId: number } }) {
   const { activityId } = params;
@@ -20,6 +22,7 @@ export default function Page({ params }: { params: { activityId: number } }) {
         </div>
       </div>
       {searchParams.has("textItemId") && <TranslateHistoryModal />}
+      {searchParams.has("showRemark") && <RemarkHistoryModal/>}
     </Suspense>
   );
 }
