@@ -97,6 +97,7 @@ export const getRemarks = (itemId: number, token: string) => {
     },
   }).then((response) => {
     if (response.ok) return response.json();
+    else if (response.status === 404) throw new Error('404');
     throw new Error();
   });
 };

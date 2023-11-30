@@ -7,9 +7,11 @@ import { useSession } from "next-auth/react";
 export const TranslationTranslate = ({
   id,
   translationTextProps,
+  hasRemark
 }: {
   id: number;
   translationTextProps: string;
+  hasRemark: boolean
 }) => {
   const session = useSession();
   const [token, setToken] = useState("");
@@ -31,12 +33,13 @@ export const TranslationTranslate = ({
       .catch((err) => console.log(err));
   };
   return (
-    <div className="flex">
+    <div className='flex'>
       <TextField
         defaultValue={translationTextProps}
         fullWidth
         multiline
         onChange={(e) => setTranslationText(e.target.value)}
+        className={hasRemark ? 'bg-yellow-300' : ''}
       />
       <Button
         variant="contained"

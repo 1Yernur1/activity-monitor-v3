@@ -53,13 +53,7 @@ export const RemarkModal = () => {
   const content =
     !(isLoading || isError) &&
     remarkItemList.map((remark) => (
-      <TextField
-        multiline
-        disabled
-        fullWidth
-        defaultValue={remark.remark}
-        key={remark.createdAt}
-      />
+        <div className="font-sans font-normal text-lg">{remark.remark}</div>
     ));
   return (
     <Dialog fullWidth open={isOpen} onClose={handleClose}>
