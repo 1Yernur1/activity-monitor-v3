@@ -1,7 +1,7 @@
-const url = "https://activity-monitoring-m950.onrender.com";
+import {URL} from "@/app/config/constants";
 
 export const getAllProjects = async (token: string) => {
-  return fetch(`${url}/projects`, {
+  return fetch(`${URL}/projects`, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
@@ -16,7 +16,7 @@ export const getAllActivitiesByProjectId = async (
   projectId: number,
   token: string
 ) => {
-  return fetch(`${url}/activities/project/${projectId}`, {
+  return fetch(`${URL}/activities/project/${projectId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
@@ -32,7 +32,7 @@ export const changeActivityStatusAsManger = async (
   status: string,
   token: string
 ) => {
-  return fetch(`${url}/activities/${id}/updateByManager/status`, {
+  return fetch(`${URL}/activities/${id}/updateByManager/status`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -46,7 +46,7 @@ export const changeActivityStatusAsManger = async (
 };
 
 export const getAllTranslators = async (token: string) => {
-  return fetch(`${url}/users/translators`, {
+  return fetch(`${URL}/users/translators`, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
@@ -58,7 +58,7 @@ export const getAllTranslators = async (token: string) => {
 };
 
 export const getAllManagers = async (token: string) => {
-  return fetch(`${url}/users/projectManagers`, {
+  return fetch(`${URL}/users/projectManagers`, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
@@ -70,7 +70,7 @@ export const getAllManagers = async (token: string) => {
 };
 
 export const getAllFreeChiefEditors = async (token: string) => {
-  return fetch(`${url}/users/chiefEditors/free`, {
+  return fetch(`${URL}/users/chiefEditors/free`, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
@@ -82,7 +82,7 @@ export const getAllFreeChiefEditors = async (token: string) => {
 };
 
 export const getActivityById = async (id: number, token: string) => {
-  return fetch(`${url}/activities/${id}`, {
+  return fetch(`${URL}/activities/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
@@ -98,7 +98,7 @@ export const changeActivityAsManager = async (
   body: any,
   token: string
 ) => {
-  return fetch(`${url}/activities/${id}/updateByManager`, {
+  return fetch(`${URL}/activities/${id}/updateByManager`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -109,7 +109,7 @@ export const changeActivityAsManager = async (
 };
 
 export const createActivity = async (body: any, token: string) => {
-  return fetch(`${url}/activities`, {
+  return fetch(`${URL}/activities`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -120,7 +120,7 @@ export const createActivity = async (body: any, token: string) => {
 };
 
 export const createProject = async (body: any, token: string) => {
-  return fetch(`${url}/projects`, {
+  return fetch(`${URL}/projects`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -134,7 +134,7 @@ export const createProject = async (body: any, token: string) => {
 };
 
 export const editProject = async (id: number, body: any, token: string) => {
-  return fetch(`${url}/projects/${id}`, {
+  return fetch(`${URL}/projects/${id}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -148,7 +148,7 @@ export const editProject = async (id: number, body: any, token: string) => {
 };
 
 export const getProjectById = (id: string, token: string) => {
-  return fetch(`${url}/projects/${id}`, {
+  return fetch(`${URL}/projects/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
@@ -160,7 +160,7 @@ export const getProjectById = (id: string, token: string) => {
 };
 
 export const addActivityDocument = (id: number, token: string, body: any) => {
-  return fetch(`${url}/activities/${id}/docx`, {
+  return fetch(`${URL}/activities/${id}/docx`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,

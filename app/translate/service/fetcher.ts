@@ -1,7 +1,7 @@
-const url = "https://activity-monitoring-m950.onrender.com";
+import {URL} from "@/app/config/constants";
 
 export const getAllTranslatorActivities = async (id: string, token: string) => {
-  return await fetch(`${url}/activities/translator/${id}`, {
+  return await fetch(`${URL}/activities/translator/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -18,7 +18,7 @@ export const changeActivityStatusAsTranslator = async (
   status: string,
   token: string
 ) => {
-  return fetch(`${url}/activities/${id}/updateByTranslator/status`, {
+  return fetch(`${URL}/activities/${id}/updateByTranslator/status`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -32,7 +32,7 @@ export const changeActivityStatusAsTranslator = async (
 };
 
 export const getProjectById = async (id: number, token: string) => {
-  return fetch(`${url}/projects/${id}`, {
+  return fetch(`${URL}/projects/${id}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ export const getProjectById = async (id: number, token: string) => {
 };
 
 export const getAllTextItemsByActivity = (id: number, token: string) => {
-  return fetch(`${url}/textItems/activity/${id}`, {
+  return fetch(`${URL}/textItems/activity/${id}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -62,7 +62,7 @@ export const createTranslateForTranslationItem = (
   body: any,
   token: string
 ) => {
-  return fetch(`${url}/textItems/${id}/translationItems`, {
+  return fetch(`${URL}/textItems/${id}/translationItems`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -76,7 +76,7 @@ export const createTranslateForTranslationItem = (
 };
 
 export const getTranslationItemHistory = (itemId: number, token: string) => {
-  return fetch(`${url}/textItems/${itemId}/translationItems`, {
+  return fetch(`${URL}/textItems/${itemId}/translationItems`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -89,7 +89,7 @@ export const getTranslationItemHistory = (itemId: number, token: string) => {
 };
 
 export const getRemarkHistory = (itemId: number, token: string) => {
-  return fetch(`${url}/textItems/${itemId}/latestTranslationItem/remarks`, {
+  return fetch(`${URL}/textItems/${itemId}/latestTranslationItem/remarks`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -106,7 +106,7 @@ export const createActivityLogDaily = (
   body: any,
   token: string
 ) => {
-  return fetch(`${url}/activities/${id}/log/daily`, {
+  return fetch(`${URL}/activities/${id}/log/daily`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -125,7 +125,7 @@ export const createActivityLogWeekly = (
   body: any,
   token: string
 ) => {
-  return fetch(`${url}/activities/${id}/log/weekly`, {
+  return fetch(`${URL}/activities/${id}/log/weekly`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,

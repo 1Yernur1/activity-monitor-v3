@@ -1,7 +1,7 @@
-const url = "https://activity-monitoring-m950.onrender.com";
+import {URL} from "@/app/config/constants";
 
 export const getAllReviewsAsChief = (chiefEditorId: string, token: string) => {
-  return fetch(`${url}/reviews/chiefEditor/${chiefEditorId}`, {
+  return fetch(`${URL}/reviews/chiefEditor/${chiefEditorId}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -18,7 +18,7 @@ export const createRemarkForTranslationItem = (
   body: any,
   token: string
 ) => {
-  return fetch(`${url}/textItems/${textItemId}/latestTranslationItem/remarks`, {
+  return fetch(`${URL}/textItems/${textItemId}/latestTranslationItem/remarks`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -32,7 +32,7 @@ export const createRemarkForTranslationItem = (
 };
 
 export const getAllTranslationRemarks = (textItemId: number, token: string) => {
-  return fetch(`${url}/textItems/${textItemId}/latestTranslationItem/remarks`, {
+  return fetch(`${URL}/textItems/${textItemId}/latestTranslationItem/remarks`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -49,7 +49,7 @@ export const changeReviewStatus = (
   body: any,
   token: string
 ) => {
-  return fetch(`${url}/reviews/${reviewId}/update/status`, {
+  return fetch(`${URL}/reviews/${reviewId}/update/status`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
