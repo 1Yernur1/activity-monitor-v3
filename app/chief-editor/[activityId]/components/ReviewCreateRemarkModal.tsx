@@ -57,6 +57,10 @@ export const ReviewCreateRemarkModal = () => {
         .then((res) => {})
         .catch(() => setIsError(true))
         .finally(() => setIsDisabled(false));
+
+      const params = new URLSearchParams(searchParams);
+      params.delete("textItemId");
+      router.replace(`${pathname}?${params}`);
     }
   };
 
