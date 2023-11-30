@@ -1,5 +1,5 @@
 export interface RemarkModel {
-    id: number;
+    reviewId: number;
     remark: string;
     createdAt: string;
-  }
+}

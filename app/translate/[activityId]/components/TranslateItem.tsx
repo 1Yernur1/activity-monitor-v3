@@ -19,11 +19,12 @@ export const TranslateItem = ({
   const handleShowHistory = () => {
     handleClose();
     const params = new URLSearchParams(searchParams);
+    params.set("showHistory", "true");
     params.set("textItemId", id.toString());
     router.replace(`${pathname}?${params}`);
   };
 
-  const handleShowRemarkHistory = () => {
+  const handleShowRemark = () => {
     handleClose();
     const params = new URLSearchParams(searchParams);
     params.set("showRemark", "true");
@@ -59,7 +60,7 @@ export const TranslateItem = ({
       </div>
       <Menu open={isOpen} anchorEl={anchorEl} onClose={handleClose}>
         <MenuItem onClick={handleShowHistory}>History</MenuItem>
-        <MenuItem onClick={handleShowRemarkHistory}>Remark</MenuItem>
+        <MenuItem onClick={handleShowRemark}>Remark</MenuItem>
       </Menu>
     </>
   );

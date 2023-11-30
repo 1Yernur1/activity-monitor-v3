@@ -88,7 +88,7 @@ export const getTranslationItemHistory = (itemId: number, token: string) => {
   });
 };
 
-export const getRemarkHistory = (itemId: number, token: string) => {
+export const getRemarks = (itemId: number, token: string) => {
   return fetch(`${URL}/textItems/${itemId}/latestTranslationItem/remarks`, {
     method: "GET",
     headers: {

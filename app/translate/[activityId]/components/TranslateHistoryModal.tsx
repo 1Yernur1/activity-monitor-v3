@@ -42,6 +42,7 @@ export const TranslateHistoryModal = () => {
   const handleClose = () => {
     const params = new URLSearchParams(searchParams);
     params.delete("textItemId");
+    params.delete("showHistory");
     router.replace(`${pathname}?${params}`);
   };
 

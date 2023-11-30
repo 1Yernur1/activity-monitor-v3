@@ -11,10 +11,10 @@ import {
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getRemarkHistory } from "../../service/fetcher";
+import { getRemarks } from "../../service/fetcher";
 import { RemarkModel } from "@/app/model/RemarkModel";
 
-export const RemarkHistoryModal = () => {
+export const RemarkModal = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -32,7 +32,7 @@ export const RemarkHistoryModal = () => {
     if (session.data?.user && textItemId) {
       const { user } = session.data;
       const { idToken } = user;
-      getRemarkHistory(+textItemId, idToken)
+      getRemarks(+textItemId, idToken)
         .then((data) => setRemarkItemList(data))
         .catch(() => setIsError(true))
         .finally(() => setIsLoading(false));
@@ -42,6 +42,7 @@ export const RemarkHistoryModal = () => {
   const handleClose = () => {
     const params = new URLSearchParams(searchParams);
     params.delete("textItemId");
+    params.delete("showRemark");
     router.replace(`${pathname}?${params}`);
   };
 
@@ -57,7 +58,7 @@ export const RemarkHistoryModal = () => {
         disabled
         fullWidth
         defaultValue={remark.remark}
-        key={remark.id}
+        key={remark.createdAt}
       />
     ));
   return (
