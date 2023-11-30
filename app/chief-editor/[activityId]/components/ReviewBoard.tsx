@@ -12,7 +12,7 @@ import {ActivityModel} from "@/app/model/ActivityModel";
 export const ReviewBoard = ({ activityId }: { activityId: number }) => {
   const session = useSession();
   const [activity, setActivity] = useState<
-      ActivityModel
+      ActivityModel | null
       >(null);
   const [translateItemList, setTranslateItemList] = useState<
     TranslateItemModel[]
@@ -44,7 +44,7 @@ export const ReviewBoard = ({ activityId }: { activityId: number }) => {
   const content =
     !(isLoading || isError) &&
       <>
-        <h1 className="ml-3 mt-4 text-3xl font-semibold text-gray-900">{activity.title}</h1>
+        <h1 className="ml-3 mt-4 text-3xl font-semibold text-gray-900">{activity?.title}</h1>
         {translateItemList.map((item) => (
             <ReviewItem key={item.ordinal} reviewItem={item} />))}
       </>

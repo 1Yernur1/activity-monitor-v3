@@ -12,7 +12,7 @@ import {getActivityById} from "@/app/home/service/fetcher";
 export const TranslateBoard = ({ activityId }: { activityId: number }) => {
   const session = useSession();
   const [activity, setActivity] = useState<
-      ActivityModel
+      ActivityModel | null
       >(null);
   const [translateItemList, setTranslateItemList] = useState<
     TranslateItemModel[]
@@ -44,7 +44,7 @@ export const TranslateBoard = ({ activityId }: { activityId: number }) => {
   const content =
     !(isLoading || isError) &&
       <>
-          <h1 className="ml-3 mt-4 text-3xl font-semibold text-gray-900">{activity.title}</h1>
+          <h1 className="ml-3 mt-4 text-3xl font-semibold text-gray-900">{activity?.title}</h1>
           {/*[TODO: handle reload of activity state and this element on Save button click] <Typography variant="body1" className="ml-4 mt-2">Completed: {activity.percentageCompleted}%</Typography>*/}
         {translateItemList.map((item) => (
             <TranslateItem key={item.ordinal} translateItem={item} />
