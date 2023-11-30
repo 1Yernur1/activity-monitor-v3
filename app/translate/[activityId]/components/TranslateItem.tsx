@@ -66,9 +66,7 @@ export const TranslateItem = ({
   const remarkMenuItem =
       !(isLoading || isError) &&
       (remarkItemList && remarkItemList.length > 0) &&
-      remarkItemList.map((item) => (
-          <MenuItem onClick={handleShowRemark}>Remark</MenuItem>
-      ));
+      <MenuItem onClick={handleShowRemark}>Remark</MenuItem>;
 
   const handleClose = () => setAnchorEl(null);
   const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) =>
