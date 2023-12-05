@@ -11,7 +11,7 @@ import {
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getRemarkHistory } from "../../service/fetcher";
+import { getRemarkHistory } from "../translate/service/fetcher";
 import { RemarkModel } from "@/app/model/RemarkModel";
 
 export const RemarkHistoryModal = () => {
@@ -41,6 +41,7 @@ export const RemarkHistoryModal = () => {
 
   const handleClose = () => {
     const params = new URLSearchParams(searchParams);
+    params.delete("showRemark");
     params.delete("textItemId");
     router.replace(`${pathname}?${params}`);
   };

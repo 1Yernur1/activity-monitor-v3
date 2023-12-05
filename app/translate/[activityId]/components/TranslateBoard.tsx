@@ -4,16 +4,19 @@ import { useEffect, useState } from "react";
 import { getAllTextItemsByActivity } from "../../service/fetcher";
 import { useSession } from "next-auth/react";
 import { TranslateItemModel } from "@/app/model/TextItemModel";
-import { Typography } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import { TranslateItem } from "./TranslateItem";
+import { useRouter } from "next/navigation";
 
 export const TranslateBoard = ({ activityId }: { activityId: number }) => {
   const session = useSession();
+  const router = useRouter();
   const [translateItemList, setTranslateItemList] = useState<
     TranslateItemModel[]
   >([]);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     setIsLoading(true);
     if (session.data?.user) {
@@ -32,8 +35,14 @@ export const TranslateBoard = ({ activityId }: { activityId: number }) => {
     translateItemList.map((item) => (
       <TranslateItem key={item.ordinal} translateItem={item} />
     ));
+  const backToHome = !isLoading && (
+    <Button variant="contained" onClick={() => router.back()}>
+      Back
+    </Button>
+  );
   return (
     <div>
+      <div className="pt-4 pl-4">{backToHome}</div>
       {isError && <p className="text-red-500 text-center">Something wrong</p>}
       {loading}
       {content}
