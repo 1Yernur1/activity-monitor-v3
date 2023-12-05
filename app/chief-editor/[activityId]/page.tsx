@@ -5,6 +5,7 @@ import { Header } from "@/app/components/Header";
 import { useSearchParams } from "next/navigation";
 import { ReviewBoard } from "./components/ReviewBoard";
 import { ReviewCreateRemarkModal } from "./components/ReviewCreateRemarkModal";
+import { RemarkHistoryModal } from "../../remark/RemarkHistoryModal";
 
 export default function Page({ params }: { params: { activityId: number } }) {
   const { activityId } = params;
@@ -19,7 +20,8 @@ export default function Page({ params }: { params: { activityId: number } }) {
           <ReviewBoard activityId={activityId} />
         </div>
       </div>
-      {searchParams.has("textItemId") && <ReviewCreateRemarkModal />}
+      {searchParams.has("createRemark") && <ReviewCreateRemarkModal />}
+      {searchParams.has("showRemark") && <RemarkHistoryModal />}
     </Suspense>
   );
 }

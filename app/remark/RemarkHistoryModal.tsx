@@ -11,7 +11,11 @@ import {
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+<<<<<<<< HEAD:app/translate/[activityId]/components/RemarkModal.tsx
 import { getRemarks } from "../../service/fetcher";
+========
+import { getRemarkHistory } from "../translate/service/fetcher";
+>>>>>>>> new_branch:app/remark/RemarkHistoryModal.tsx
 import { RemarkModel } from "@/app/model/RemarkModel";
 
 export const RemarkModal = () => {

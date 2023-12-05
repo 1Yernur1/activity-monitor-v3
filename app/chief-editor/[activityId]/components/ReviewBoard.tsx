@@ -2,15 +2,17 @@
 
 import { TranslateItemModel } from "@/app/model/TextItemModel";
 import { getAllTextItemsByActivity } from "@/app/translate/service/fetcher";
-import { Typography } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { ReviewItem } from "./ReviewItem";
+import { useRouter } from "next/navigation";
 import {getActivityById} from "@/app/home/service/fetcher";
 import {ActivityModel} from "@/app/model/ActivityModel";
 
 export const ReviewBoard = ({ activityId }: { activityId: number }) => {
   const session = useSession();
+  const router = useRouter();
   const [activity, setActivity] = useState<
       ActivityModel | null
       >(null);
@@ -41,6 +43,11 @@ export const ReviewBoard = ({ activityId }: { activityId: number }) => {
   }, [session]);
 
   const loading = isLoading && <Typography>Loading...</Typography>;
+  const backToHome = !isLoading && (
+    <Button variant="contained" onClick={() => router.back()}>
+      Back
+    </Button>
+  );
   const content =
     !(isLoading || isError) &&
       <>
@@ -50,9 +57,10 @@ export const ReviewBoard = ({ activityId }: { activityId: number }) => {
       </>
   return (
     <div>
+      <div className="pt-4 pl-4">{backToHome}</div>
       {isError && <p className="text-red-500 text-center">Something wrong</p>}
       {loading}
       {content}
     </div>
   );
-}
+};
