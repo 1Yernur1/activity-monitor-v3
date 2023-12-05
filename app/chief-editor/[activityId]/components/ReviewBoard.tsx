@@ -53,7 +53,7 @@ export const ReviewBoard = ({ activityId }: { activityId: number }) => {
       <>
         <h1 className="ml-3 mt-4 text-3xl font-semibold text-gray-900">{activity?.title}</h1>
         {translateItemList.map((item) => (
-            <ReviewItem key={item.ordinal} reviewItem={item} />))}
+            <ReviewItem key={item.id} reviewItem={item} />))}
       </>
   return (
     <div>

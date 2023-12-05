@@ -23,18 +23,18 @@ export const ReviewCreateRemarkModal = () => {
   const session = useSession();
   const isOpen = searchParams.has("textItemId");
   
-  const translationItemId = searchParams.get("textItemId");
+  const textItemId = searchParams.get("textItemId");
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [remark, setRemark] = useState("");
 
   useEffect(() => {
-    if (session.data?.user && translationItemId) {
+    if (session.data?.user && textItemId) {
       const { user } = session.data;
       const { idToken } = user;
 
-      getAllTranslationRemarks(+translationItemId, idToken)
+      getAllTranslationRemarks(+textItemId, idToken)
         .then((data) => console.log(data))
         .catch((err) => console.log(err));
     }
@@ -50,15 +50,14 @@ export const ReviewCreateRemarkModal = () => {
   const handleCreateRemark = () => {
     setIsDisabled(true);
     setIsError(false);
-    if (session.data?.user && translationItemId && remark.length > 0) {
+    if (session.data?.user && textItemId && remark.length > 0) {
       const { user } = session.data;
       const { idToken } = user;
       const body = {
         remark: remark,
       };
-      console.log("Non Incremented id %s",translationItemId);
-      console.log("Incremented id %s",+translationItemId);
-      createRemarkForTranslationItem(+translationItemId, body, idToken)
+      console.log("Non Incremented id %s",textItemId);
+      createRemarkForTranslationItem(+textItemId, body, idToken)
         .then((res) => {})
         .catch(() => setIsError(true))
         .finally(() => setIsDisabled(false));

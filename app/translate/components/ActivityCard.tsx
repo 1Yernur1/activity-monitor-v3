@@ -43,9 +43,8 @@ export const ActivityCard = ({
   const translatorStatusList = ["TODO", "IN_PROGRESS", "REVISION"];
   const isChangeableStatus = translatorStatusList.includes(status);
   const activityShowStatusList = ["IN_PROGRESS", "REVISION"];
-  const notNullIsLogged = isLoggedToday === null || isLoggedToday === true;
   const isShowingActivityLog =
-    docxUploaded && notNullIsLogged && activityShowStatusList.includes(status);
+    docxUploaded && !isLoggedToday && activityShowStatusList.includes(status);
 
   const handleClose = () => setAnchorEl(null);
 
