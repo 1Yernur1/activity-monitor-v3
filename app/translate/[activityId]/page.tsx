@@ -5,7 +5,7 @@ import { Header } from "@/app/components/Header";
 import { TranslateBoard } from "./components/TranslateBoard";
 import { useSearchParams } from "next/navigation";
 import { TranslateHistoryModal } from "./components/TranslateHistoryModal";
-import { RemarkModal } from "./components/RemarkModal";
+import { RemarkModal } from "../../remark/RemarkModal";
 
 
 export default function Page({ params }: { params: { activityId: number } }) {
