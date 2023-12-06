@@ -45,7 +45,7 @@ export const ReviewCard = ({
 
   const handleShowTranslation = () => {
     handleClose();
-    router.push(`/chief-editor/${id}`);
+    router.push(`/chief-editor/${activityId}`);
   };
 
   const handleChangeStatus = () => {
