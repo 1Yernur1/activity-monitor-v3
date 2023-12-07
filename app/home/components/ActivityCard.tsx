@@ -57,6 +57,14 @@ export const ActivityCard = ({
     router.replace(`${pathname}?${params}`);
   };
 
+  const handleShowActivityInfo = () => {
+    handleClose();
+    const params = new URLSearchParams(searchParams);
+    params.set("activityInfo", id.toString());
+    console.log("HEEERE: ", `${pathname}?${params.toString()}`);
+    router.replace(`${pathname}?${params.toString()}`);
+  };
+
   const handleAddDoc = () => {
     handleClose();
     const params = new URLSearchParams(searchParams);
@@ -89,6 +97,7 @@ export const ActivityCard = ({
         {isChangeableStatus && (
           <MenuItem onClick={handleClickChangeStatus}>Change Status</MenuItem>
         )}
+        <MenuItem onClick={handleShowActivityInfo}>Activity Info</MenuItem>
         <MenuItem onClick={handleAddDoc}>Add Document</MenuItem>
       </Menu>
     </>
